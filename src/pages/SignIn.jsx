@@ -1,8 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
 import OAuth from '../Components/OAuth';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { toast } from "react-toastify";
+ 
 
 export default function SignIn() {
     const [showPassword, setShowPassword]=useState(false)
@@ -11,11 +14,25 @@ export default function SignIn() {
         password:"",
     });
 const {email, password}= formData;
+const navigate=useNavigate()
 function onchange(e){
     setFormData((prevState)=>({
        ...prevState,
        [e.target.id]:e.target.value,
     }))
+}
+
+async function onSubmit(e){
+    e.preventDefault()
+    try {
+        const auth = getAuth()
+        const userCredentail = await signInWithEmailAndPassword(auth, email,password)
+    if (userCredentail.user){
+        navigate("/")
+    }
+    } catch (error) {
+        toast.error("Bad user credentials")
+    }
 }
 
   return (
@@ -27,7 +44,7 @@ function onchange(e){
     </div>
 
     <div>
-<form className='w-full md:w-[67%] lg: w-[40%] lg:ml-20'>
+<form onSubmit={onSubmit}  className='w-full md:w-[67%] lg: w-[40%] lg:ml-20'>
     <input type="email"   id='email' value={email} onChange={onchange} placeholder="Email address" className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"/>
 
     <div className='relative mb-6'>
@@ -59,3 +76,7 @@ function onchange(e){
     </section>
   )
 }
+
+
+
+ 
