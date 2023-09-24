@@ -20,7 +20,7 @@ export default function CreateListing() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
-    name:"",
+    name: "",
     bedrooms: 1,
     bathrooms: 1,
     parking: false,
