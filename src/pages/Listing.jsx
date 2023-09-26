@@ -27,7 +27,6 @@ export default function Listing() {
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [contactLandlord, setContactLandlord] = useState(false);
-  // SwiperCore.use([Autoplay, Navigation, Pagination]);
   L.setOptions({
     lang: "en",
     // ... other options
@@ -149,28 +148,6 @@ export default function Listing() {
           {contactLandlord && (
             <Contact userRef={listing.userRef} listing={listing} />
           )}
-        </div>
-        <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2">
-          <MapContainer
-            className="leaflet-container"
-            center={[listing.geolocation.lat, listing.geolocation.lng]}
-            zoom={13}
-            locale="en"
-            // center={[35.6892, 51.389]}
-
-            scrollWheelZoom={false}
-            style={{ height: "100%", width: "100%" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker
-              position={[listing.geolocation.lat, listing.geolocation.lng]}
-            >
-              <Popup>{listing.address}</Popup>
-            </Marker>
-          </MapContainer>
         </div>
       </div>
     </main>
